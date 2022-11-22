@@ -1,0 +1,40 @@
+version: '3.0'
+
+services:
+  nginx:
+    build:
+      context: ./docker/nginx
+    volumes:
+      - ./app:/symfony
+    container_name: ${PROJECT_NAME}-nginx
+    restart: always
+    ports:
+      - "80:80"
+
+  php-fpm:
+    build:
+      context: ./docker/php-fpm
+    volumes:
+      - ./app:/symfony
+    container_name: ${PROJECT_NAME}-php-fpm
+    ports:
+      - "9000:9000"
+    depends_on:
+      - postgres
+
+  postgres:
+    image: postgres:14-alpine
+    volumes:
+        - ./docker/postgres/pgdata:/var/lib/postgresql/data/pgdata
+    container_name: ${PROJECT_NAME}-postgres
+    restart: always
+    environment:
+      POSTGRES_PASSWORD: password
+      POSTGRES_USER: user
+      POSTGRES_DATABASE: postgres
+      PGDATA: /var/lib/postgresql/data/pgdata
+    ports:
+      - "5432:5432"
+
+volumes:
+  postgres:
