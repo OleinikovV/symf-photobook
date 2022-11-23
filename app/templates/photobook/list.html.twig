@@ -1,0 +1,13 @@
+<h3>Photobook</h3>
+<nav>
+    <li><a href="/photobook/create">Create</a></li>
+</nav>
+
+<div class="list">
+    {% for entity in entities %}
+        * <a href="/photo/list/{{ entity.getId }}">{{ entity.getName }}</a>
+        <span><a href="/photobook/delete/{{entity.getId}}">Delete photobook</a></span>
+    {% else %}
+        No photobook have been found.
+    {% endfor %}
+</div>

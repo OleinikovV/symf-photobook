@@ -1,0 +1,14 @@
+<h3>Photobook</h3>
+<nav>
+    <li><a href="/photobook/update/{{photobook.getId}}">Update</a></li>
+    <li><a href="/photo/add/{{photobook.getId}}">Add Photo</a></li>
+</nav>
+
+<div class="list">
+    {% for photo in photobook.getPhotos %}
+        <img src="{{photo.getOrignUrl}}" alt="{{photo.getName}}"> {{photo.getName}} </img>
+        <span><a href="/photo/delete/{{photo.getId}}">Delete photo</a></span>
+    {% else %}
+        No photo have been found.
+    {% endfor %}
+</div>
